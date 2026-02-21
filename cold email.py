@@ -130,12 +130,23 @@ if not api_key:
     st.info("👈 Please enter your Groq API key in the sidebar to get started.")
     st.stop()
 
-llm = LLM(
-    model="groq/llama-3.3-70b-versatile",
-    api_key=api_key,
-    temperature=0.7,
-    max_tokens=4096
-)
+if not api_key.startswith("gsk_"):
+    st.sidebar.error("❌ Invalid API key format! Groq API keys start with 'gsk_'")
+    st.error("⚠️ The API key is wrong! Please type the correct API key. It should start with 'gsk_'")
+    st.stop()
+
+try:
+    llm = LLM(
+        model="groq/llama-3.3-70b-versatile",
+        api_key=api_key,
+        temperature=0.7,
+        max_tokens=4096
+    )
+    st.sidebar.success("✅ API key validated successfully!")
+except Exception as e:
+    st.sidebar.error("❌ Invalid API key!")
+    st.error("⚠️ The API key is wrong! Please type the correct API key.")
+    st.stop()
 
 agency_services = """
 1. SEO Optimization Service: Best for companies with good products but low traffic. We increase organic reach.
