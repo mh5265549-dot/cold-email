@@ -108,7 +108,27 @@ st.markdown("""
 st.title("📧 AI Cold Email Generator")
 st.markdown("Enter a company URL and we'll analyze their business, identify pain points, and generate a personalized cold email pitch.")
 
-api_key = os.getenv("GROQ_API_KEY")
+with st.sidebar:
+    st.header("🔑 API Configuration")
+    api_key = st.text_input(
+        "Enter your Groq API Key:",
+        type="password",
+        placeholder="gsk_...",
+        help="Get your API key from https://console.groq.com/keys"
+    )
+    
+    if not api_key:
+        st.warning("⚠️ Please enter your Groq API key to use the app!")
+    else:
+        st.success("✅ API key configured!")
+    
+    st.markdown("---")
+    st.markdown("**Don't have an API key?**")
+    st.markdown("[Get one free from Groq](https://console.groq.com/keys)")
+
+if not api_key:
+    st.info("👈 Please enter your Groq API key in the sidebar to get started.")
+    st.stop()
 
 llm = LLM(
     model="groq/llama-3.3-70b-versatile",
@@ -124,8 +144,7 @@ agency_services = """
 """
 
 with st.sidebar:
-    st.header("⚙️ Configuration")
-    st.markdown("**Our Services:**")
+    st.header("⚙️ Our Services")
     st.markdown(agency_services)
     st.markdown("---")
     st.caption("Powered by CrewAI + Groq")
