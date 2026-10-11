@@ -5,10 +5,6 @@ import os
 
 load_dotenv()
 
-embedding_work = SentenceTransformerEmbeddingFunction(
-    model_name = "all-MINILM-L6-v2"
-)
-
 user_topic = input("Enter the topic you want to study (math, science, history): ")
 
 search_tool = SerperDevTool()
@@ -27,7 +23,7 @@ teacher_agent = Agent(
 )
 
 teacher_task = Task(
-    description="Teach the topic with simple explanations",
+    description="Teach the topic '{topic}' with simple explanations and examples",
     expected_output="Student understands the topic clearly",
     agent=teacher_agent
 )

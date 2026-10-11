@@ -1,13 +1,13 @@
 from crewai import Agent , Task , Crew , LLM
-from crewai_tools import ScraperDevTool
+from crewai_tools import SerperDevTool, ScrapeWebsiteTool
 from dotenv import load_dotenv 
 import os
 
 chatbot = input("enter the topic you want to study about:")
 
 load_dotenv()
-search_tool = ScraperDevTool()
-ScraperDevTool
+search_tool = SerperDevTool()      # web search (needs SERPER_API_KEY)
+scrape_tool = ScrapeWebsiteTool()  # reads pages found by the search
 
 
 llm = LLM(
@@ -20,20 +20,19 @@ resercher_agent = Agent(
     goal = "research information with the users input ",
     backstory = "you are a great resercher who studies about the world and space but people didnt take any interest in it",
     llm = llm,
-    tools = [search_tool]
+    tools = [search_tool, scrape_tool]
 )
 
 indentation_agent = Agent(
     role = "indentation agent",
     goal = "indent the answer given by the resercher agent to make it more readable",
     backstory = "you are a english expert teacher who helps people to write the paragraph or whatever in readable format",
-    llm = llm,
-    tools = [search_tool]
+    llm = llm
 )
 
 
 reserchers_task = Task(
-    description = "research about the topic given by researcher and provide the real information ",
+    description = "research about the topic '{topic}' and provide the real information",
     expected_output = "a useful information about the topic so that if people read this information so they started taking interest in it",
     agent=resercher_agent
 )

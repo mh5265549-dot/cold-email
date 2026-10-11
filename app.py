@@ -1,9 +1,6 @@
 import streamlit as st
-import os
 import smtplib
 import re
-import json
-import time
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -178,7 +175,7 @@ try:
         max_tokens=4096
     )
     st.sidebar.success("✅ API key validated!")
-except Exception as e:
+except Exception:
     st.sidebar.error("❌ Invalid API key!")
     st.error("⚠️ The API key is wrong! Please type the correct API key.")
     st.stop()
@@ -449,7 +446,7 @@ You must pick the SINGLE best service for this specific client and explain why."
                     with st.expander(f"📧 {item['timestamp']} - {item['url'][:40]}..."):
                         st.markdown(f"**Tone:** {item['tone']} | **Language:** {item['language']}")
                         st.text_area("Email Content", item['email'], height=200, key=f"history_{idx}")
-                        if st.button(f"Load This Email", key=f"load_{idx}"):
+                        if st.button("Load This Email", key=f"load_{idx}"):
                             st.info("Feature: Click to reload this email into the editor")
                 
                 if st.button("🗑️ Clear History"):

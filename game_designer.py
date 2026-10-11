@@ -34,7 +34,7 @@ game_improver = Agent(
 )
 
 game_creator = Task(
-    description="create the game based on the user's requested game type",
+    description="create a {game_type} game based on the user's requested game type",
     expected_output="a complete game design document",
     agent=Game_Creator
 )
@@ -57,5 +57,5 @@ crew = Crew(
     verbose=True
 )
 
-results = crew.kickoff()
+results = crew.kickoff(inputs={"game_type": user_input})
 print(results)

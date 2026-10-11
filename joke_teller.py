@@ -63,7 +63,7 @@ if st.button("Tell me a joke!", type="primary"):
         st.success("Here's your joke!")
         st.markdown("---")
         st.markdown(f"**🎤 Joke Type:** {joke_type}")
-        st.markdown(f"**😄 Result:**")
+        st.markdown("**😄 Result:**")
         st.write(result.raw)
 
 st.markdown("---")
